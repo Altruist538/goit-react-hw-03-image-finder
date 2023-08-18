@@ -2,9 +2,9 @@ import axios from 'axios';
 // import Notiflix from 'notiflix';
 const BASE_URL = 'https://pixabay.com/api/';
 const myApiKey = '38129087-a1875a38c8c49036313c55811';
-let pageCounter = 1;
-const perPage = 40;
-export const fetchQuizzes = async value => {
+
+const perPage = 10;
+export const fetchQuizzes = async (value, page) => {
   const response = await axios.get(`${BASE_URL}`, {
     params: {
       key: myApiKey,
@@ -12,7 +12,7 @@ export const fetchQuizzes = async value => {
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: true,
-      page: pageCounter,
+      page: page,
       per_page: perPage,
     },
   });

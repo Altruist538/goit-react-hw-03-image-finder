@@ -1,4 +1,4 @@
-import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+// import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 
 export const ImageGallery = ({ arrayImages }) => {
   console.log(arrayImages);
@@ -6,7 +6,7 @@ export const ImageGallery = ({ arrayImages }) => {
     <>
       <ul className="gallery">
         {arrayImages.map((arrayImage, index) => (
-          <li key={arrayImage.idData} className="gallery-item">
+          <li key={arrayImage.id} className="gallery-item">
             <img src={arrayImage.largeImageURL} alt={arrayImage.tags} />
           </li>
           //   <ImageGalleryItem
