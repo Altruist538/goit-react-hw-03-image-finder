@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { fetchQuizzes } from './api';
+import { Button } from './Button/Button';
 const localStorageKey = 'quiz-query';
 
 export class App extends Component {
@@ -22,17 +23,20 @@ export class App extends Component {
   }
   async componentDidUpdate(prevProps, prevState) {
     const { query: prevQuery } = prevState;
-    const { query: nextQuery, page } = this.state;
+    const { query: nextQuery } = this.state;
 
     if (prevQuery !== nextQuery) {
       localStorage.setItem(localStorageKey, JSON.stringify(nextQuery));
       try {
         this.setState({ loading: true });
 
-        const quizItems = await fetchQuizzes(nextQuery, page);
-        console.log(quizItems[0].tags);
+        const quizItems = await fetchQuizzes(nextQuery, this.state.page);
+        // console.log(quizItems[0].tags);
 
-        this.setState({ images: quizItems, loading: false });
+        this.setState({
+          images: [...this.state.images, ...quizItems],
+          loading: false,
+        });
       } catch (error) {
         console.log(error);
         this.setState({ loading: false });
@@ -41,29 +45,24 @@ export class App extends Component {
   }
   changeQuery = newQuery => {
     this.setState({ query: newQuery, images: [], loading: false, page: 1 });
-    console.log(this.state.query);
+    // console.log(this.state.query);
   };
   pageUp = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    console.log(this.state.page);
+    // console.log(this.state.page);
   };
 
   onSubmitForm = value => {
-    // console.log(value);
-    // this.setState({ images: [], loading: true }); // Очищаємо імейджі і вмикаємо loading
-    this.changeQuery(value); // Зчитуємо значення інпута
+    this.changeQuery(value);
 
-    localStorage.setItem(localStorageKey, JSON.stringify(value)); // Зберігаємо значення в localStorage
+    localStorage.setItem(localStorageKey, JSON.stringify(value));
   };
   render() {
     return (
       <>
-        <div>Soft</div>
         <Searchbar submitForm={this.onSubmitForm} />
         <ImageGallery arrayImages={this.state.images} />
-        <button onClick={this.pageUp} type="button">
-          Load more
-        </button>
+        <Button onClick={this.pageUp} />
       </>
     );
   }

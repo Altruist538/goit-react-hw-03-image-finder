@@ -1,12 +1,33 @@
-import * as basicLightbox from 'basiclightbox';
-export const Modal = (srcData, altData) => {
-  const instance = basicLightbox.create(`
-    <div class="overlay">
-      <div class="modal">
-        <img src={srcData} alt={altData} />
-      </div>
-    </div>
-  `);
-  instance.show();
-  return instance;
+import Modal from 'react-modal';
+import { Image } from './Modal.styled';
+
+Modal.setAppElement('#root');
+export const ModalOn = ({ srcDataModal, altDataModal, isOpen, onClose }) => {
+  return (
+    <Modal
+      style={{
+        content: {
+          overlay: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          },
+          content: {
+            position: 'static',
+            margin: 'auto',
+            border: 'none',
+            borderRadius: '0',
+            padding: '0',
+            backgroundColor: 'transparent',
+          },
+        },
+      }}
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      contentLabel="Modal"
+    >
+      <Image src={srcDataModal} alt={altDataModal} />
+    </Modal>
+  );
 };

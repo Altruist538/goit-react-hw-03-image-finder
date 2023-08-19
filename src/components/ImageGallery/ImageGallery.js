@@ -1,21 +1,14 @@
-// import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-
+import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { ListImage } from './ImageGallery.styled';
 export const ImageGallery = ({ arrayImages }) => {
   console.log(arrayImages);
   return (
     <>
-      <ul className="gallery">
-        {arrayImages.map((arrayImage, index) => (
-          <li key={arrayImage.id} className="gallery-item">
-            <img src={arrayImage.largeImageURL} alt={arrayImage.tags} />
-          </li>
-          //   <ImageGalleryItem
-          //     srcData={arrayImage.largeImageURL}
-          //     altData={arrayImage.tags}
-          //     idData={arrayImage.id}
-          //   />
+      <ListImage className="gallery">
+        {arrayImages.map(arrayImage => (
+          <ImageGalleryItem key={arrayImage.id} arrayData={arrayImage} />
         ))}
-      </ul>
+      </ListImage>
     </>
   );
 };

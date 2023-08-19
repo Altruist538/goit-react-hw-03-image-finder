@@ -1,3 +1,11 @@
+import {
+  HeaderBox,
+  Form,
+  Input,
+  ButtonForm,
+  SpanIcon,
+} from './Searchbar.styled';
+import { BiSearchAlt } from 'react-icons/bi';
 export const Searchbar = ({ submitForm }) => {
   const handleSubmit = event => {
     event.preventDefault();
@@ -8,13 +16,14 @@ export const Searchbar = ({ submitForm }) => {
   };
   return (
     <>
-      <header className="searchbar">
-        <form onSubmit={handleSubmit} className="form">
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </button>
-
-          <input
+      <HeaderBox className="searchbar">
+        <Form onSubmit={handleSubmit} className="form">
+          <ButtonForm type="submit">
+            <SpanIcon className="button-label">
+              <BiSearchAlt size={30} color="rgb(63 81 181)" />
+            </SpanIcon>
+          </ButtonForm>
+          <Input
             className="input"
             type="text"
             autoComplete="off"
@@ -22,8 +31,8 @@ export const Searchbar = ({ submitForm }) => {
             name="query"
             placeholder="Search images and photos"
           />
-        </form>
-      </header>
+        </Form>
+      </HeaderBox>
     </>
   );
 };
