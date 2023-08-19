@@ -1,33 +1,35 @@
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
 import { Image } from './Modal.styled';
-
-Modal.setAppElement('#root');
-export const ModalOn = ({ srcDataModal, altDataModal, isOpen, onClose }) => {
+ReactModal.setAppElement('#root');
+export const Modal = ({
+  srcDataModal,
+  altDataModal,
+  isOpen,
+  onRequestClose,
+}) => {
   return (
-    <Modal
+    <ReactModal
       style={{
+        overlay: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        },
         content: {
-          overlay: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          },
-          content: {
-            position: 'static',
-            margin: 'auto',
-            border: 'none',
-            borderRadius: '0',
-            padding: '0',
-            backgroundColor: 'transparent',
-          },
+          position: 'static',
+          margin: 'auto',
+          border: 'none',
+          borderRadius: '0',
+          padding: '0',
+          backgroundColor: 'transparent',
         },
       }}
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={onRequestClose}
       contentLabel="Modal"
     >
       <Image src={srcDataModal} alt={altDataModal} />
-    </Modal>
+    </ReactModal>
   );
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ModalOn } from 'components/Modal/Modal';
+import { Modal } from 'components/Modal/Modal';
 import { Wrapper, Image } from './ImageGalleryItem.styled';
 
 export const ImageGalleryItem = ({ arrayData }) => {
@@ -21,11 +21,11 @@ export const ImageGalleryItem = ({ arrayData }) => {
       <Image src={srcPrevview} alt={altData} />
 
       {modalOpen && (
-        <ModalOn
+        <Modal
           srcDataModal={srcData}
           altDataModal={altData}
           isOpen={modalOpen}
-          onClose={closeModal}
+          onRequestClose={closeModal}
         />
       )}
     </Wrapper>
