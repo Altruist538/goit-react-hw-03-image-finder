@@ -22,27 +22,28 @@ export class App extends Component {
       });
     }
   }
-  async componentDidUpdate(prevState) {
-    const { query: prevQuery } = prevState;
-    const { query: nextQuery } = this.state;
-
-    if (prevQuery !== nextQuery || prevState.page !== this.state.page) {
-      localStorage.setItem(localStorageKey, JSON.stringify(nextQuery));
-      try {
-        this.setState({ loading: true });
-
-        const quizItems = await fetchQuizzes(nextQuery, this.state.page);
-
-        this.setState({
-          images: [...this.state.images, ...quizItems],
-          loading: false,
-        });
-      } catch (error) {
-        console.log(error);
-        this.setState({ loading: false });
-      }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.query !== this.state.query ||
+      prevState.page !== this.state.page
+    ) {
+      this.getPhotos(this.state.query, this.state.page);
     }
   }
+  getPhotos = async (query, page) => {
+    try {
+      this.setState({ loading: true });
+      const quizItems = await fetchQuizzes(query, page);
+      this.setState({
+        images: [...this.state.images, ...quizItems],
+        loading: false,
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({ loading: false });
+    }
+  };
+
   changeQuery = newQuery => {
     this.setState({ query: newQuery, images: [], loading: false, page: 1 });
   };
