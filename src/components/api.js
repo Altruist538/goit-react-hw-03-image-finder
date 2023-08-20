@@ -14,5 +14,6 @@ export const fetchQuizzes = async (value, page) => {
       per_page: perPage,
     },
   });
-  return response.data.hits;
+
+  return response.data;
 };

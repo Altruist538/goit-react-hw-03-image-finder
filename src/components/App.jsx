@@ -5,13 +5,14 @@ import { fetchQuizzes } from './api';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 const localStorageKey = 'quiz-query';
-
+const perPage = 12;
 export class App extends Component {
   state = {
     query: '',
     images: [],
     loading: false,
     page: 1,
+    totalHitsStatus: false,
   };
 
   componentDidMount() {
@@ -34,9 +35,13 @@ export class App extends Component {
     try {
       this.setState({ loading: true });
       const quizItems = await fetchQuizzes(query, page);
+      const pagesCount = Math.ceil(quizItems.totalHits / perPage);
+      const status = pagesCount !== page;
+
       this.setState({
-        images: [...this.state.images, ...quizItems],
+        images: [...this.state.images, ...quizItems.hits],
         loading: false,
+        totalHitsStatus: status,
       });
     } catch (error) {
       console.log(error);
@@ -58,7 +63,9 @@ export class App extends Component {
         <Searchbar submitForm={this.changeQuery} />
         <ImageGallery arrayImages={this.state.images} />
         {this.state.loading && <Loader />}
-        {this.state.images.length !== 0 && <Button onClick={this.pageUp} />}
+        {this.state.totalHitsStatus && this.state.images.length !== 0 && (
+          <Button onClick={this.pageUp} />
+        )}
       </>
     );
   }
