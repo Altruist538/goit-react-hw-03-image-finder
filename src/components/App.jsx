@@ -3,6 +3,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { fetchQuizzes } from './api';
 import { Button } from './Button/Button';
+import { Loader } from './Loader/Loader';
 const localStorageKey = 'quiz-query';
 
 export class App extends Component {
@@ -21,17 +22,16 @@ export class App extends Component {
       });
     }
   }
-  async componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevState) {
     const { query: prevQuery } = prevState;
     const { query: nextQuery } = this.state;
 
-    if (prevQuery !== nextQuery) {
+    if (prevQuery !== nextQuery || prevState.page !== this.state.page) {
       localStorage.setItem(localStorageKey, JSON.stringify(nextQuery));
       try {
         this.setState({ loading: true });
 
         const quizItems = await fetchQuizzes(nextQuery, this.state.page);
-        // console.log(quizItems[0].tags);
 
         this.setState({
           images: [...this.state.images, ...quizItems],
@@ -45,11 +45,9 @@ export class App extends Component {
   }
   changeQuery = newQuery => {
     this.setState({ query: newQuery, images: [], loading: false, page: 1 });
-    // console.log(this.state.query);
   };
   pageUp = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
-    // console.log(this.state.page);
   };
 
   onSubmitForm = value => {
@@ -62,7 +60,8 @@ export class App extends Component {
       <>
         <Searchbar submitForm={this.onSubmitForm} />
         <ImageGallery arrayImages={this.state.images} />
-        <Button onClick={this.pageUp} />
+        {this.state.loading && <Loader />}
+        {this.state.images.length !== 0 && <Button onClick={this.pageUp} />}
       </>
     );
   }

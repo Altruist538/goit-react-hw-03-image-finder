@@ -10,7 +10,6 @@ export const Searchbar = ({ submitForm }) => {
   const handleSubmit = event => {
     event.preventDefault();
     const query = event.target.elements.query.value;
-    console.log(query);
     submitForm(query);
     event.target.reset();
   };
