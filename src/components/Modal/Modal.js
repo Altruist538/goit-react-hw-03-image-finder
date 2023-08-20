@@ -1,14 +1,11 @@
-import ReactModal from 'react-modal';
+import Modal from 'react-modal';
 import { Image } from './Modal.styled';
-ReactModal.setAppElement('#root');
-export const Modal = ({
-  srcDataModal,
-  altDataModal,
-  isOpen,
-  onRequestClose,
-}) => {
+
+Modal.setAppElement('#root');
+
+export const ModalOn = ({ srcDataModal, altDataModal, isOpen, onClose }) => {
   return (
-    <ReactModal
+    <Modal
       style={{
         overlay: {
           display: 'flex',
@@ -26,10 +23,10 @@ export const Modal = ({
         },
       }}
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={onClose}
       contentLabel="Modal"
     >
       <Image src={srcDataModal} alt={altDataModal} />
-    </ReactModal>
+    </Modal>
   );
 };

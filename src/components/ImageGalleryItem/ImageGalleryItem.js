@@ -1,33 +1,39 @@
-import { useState } from 'react';
-import { Modal } from 'components/Modal/Modal';
+import React, { Component } from 'react';
+import { ModalOn } from 'components/Modal/Modal';
 import { Wrapper, Image } from './ImageGalleryItem.styled';
 
-export const ImageGalleryItem = ({ arrayData }) => {
-  const srcData = arrayData.largeImageURL;
-  const srcPrevview = arrayData.webformatURL;
-  const altData = arrayData.tags;
-  const [modalOpen, setModalOpen] = useState(false);
+export class ImageGalleryItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
+    };
+  }
 
-  const openModal = () => {
-    setModalOpen(true);
+  openModal = () => {
+    this.setState({ isModalOpen: true });
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
   };
 
-  return (
-    <Wrapper className="gallery-item" onClick={openModal}>
-      <Image src={srcPrevview} alt={altData} />
+  render() {
+    const { arrayData } = this.props;
+    const srcData = arrayData.largeImageURL;
+    const srcPrevview = arrayData.webformatURL;
+    const altData = arrayData.tags;
 
-      {modalOpen && (
-        <Modal
+    return (
+      <Wrapper>
+        <Image onClick={this.openModal} src={srcPrevview} alt={altData} />
+        <ModalOn
           srcDataModal={srcData}
           altDataModal={altData}
-          isOpen={modalOpen}
-          onRequestClose={closeModal}
+          isOpen={this.state.isModalOpen}
+          onClose={this.closeModal}
         />
-      )}
-    </Wrapper>
-  );
-};
+      </Wrapper>
+    );
+  }
+}
