@@ -23,9 +23,10 @@ export class ImageGalleryItem extends Component {
     const srcData = arrayData.largeImageURL;
     const srcPrevview = arrayData.webformatURL;
     const altData = arrayData.tags;
+    const idData = arrayData.id;
 
     return (
-      <Wrapper>
+      <Wrapper key={idData}>
         <Image onClick={this.openModal} src={srcPrevview} alt={altData} />
         <ModalOn
           srcDataModal={srcData}
