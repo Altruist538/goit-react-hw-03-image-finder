@@ -44,10 +44,8 @@ export const ButtonForm = styled.button`
   justify-content: center;
   align-items: center;
   border: 5px;
-
   width: 100px;
   height: 40px;
-
   object-fit: contain;
   cursor: pointer;
 `;
