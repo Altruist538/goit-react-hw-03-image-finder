@@ -46,20 +46,16 @@ export class App extends Component {
 
   changeQuery = newQuery => {
     this.setState({ query: newQuery, images: [], loading: false, page: 1 });
+    localStorage.setItem(localStorageKey, JSON.stringify(newQuery));
   };
   pageUp = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  onSubmitForm = value => {
-    this.changeQuery(value);
-
-    localStorage.setItem(localStorageKey, JSON.stringify(value));
-  };
   render() {
     return (
       <>
-        <Searchbar submitForm={this.onSubmitForm} />
+        <Searchbar submitForm={this.changeQuery} />
         <ImageGallery arrayImages={this.state.images} />
         {this.state.loading && <Loader />}
         {this.state.images.length !== 0 && <Button onClick={this.pageUp} />}
